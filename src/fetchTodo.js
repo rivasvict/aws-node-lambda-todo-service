@@ -7,9 +7,9 @@ const fetchTodo = async (event) => {
   let todo;
 
   try {
-    const result = await dynamo.scan({
+    const result = await dynamo.get({
       TableName: "TodoTable",
-      Key: id
+      Key: { id }
     }).promise(); // promise is required to be returned
     todo = result.Item;
   } catch (error) {
