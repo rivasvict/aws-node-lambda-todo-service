@@ -3,7 +3,7 @@
 const { v4 } = require("uuid");
 const AWS = require("aws-sdk");
 
-const addTodo = async (event) => {
+const fetchTodo = async (event) => {
   /**
    * REMINDER, for this to work your AWS user for
    * serverless should get access to be able to
@@ -42,5 +42,6 @@ const addTodo = async (event) => {
 };
 
 module.exports = {
-  handler: addTodo,
+  handler: fetchTodo,
 };
+
