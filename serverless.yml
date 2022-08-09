@@ -11,7 +11,7 @@ functions:
   # A function handler name
   hello:
     # The actual function handler reference
-    handler: handler.hello
+    handler: src/hello.handler
     # Events list that trigger this handler
     events:
       # Run this function on httpApi on the path / on the method get
