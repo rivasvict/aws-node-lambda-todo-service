@@ -43,6 +43,12 @@ functions:
       - httpApi:
           path: /
           method: post
+  updateTodo:
+    handler: src/updateTodo.handler
+    events:
+      - httpApi:
+          path: /{id}
+          method: put
   fetchTodos:
     handler: src/fetchTodos.handler
     events:
