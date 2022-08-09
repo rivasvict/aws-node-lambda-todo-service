@@ -18,3 +18,30 @@ functions:
       - httpApi:
           path: /
           method: get
+
+# Cloudformation configuration (ourside aws resources we would want to provision)
+resources:
+  # In Cloudformation the capitalization is very important
+  Resources:
+    # Define the resource in AWS called (TodoTable)
+    TodoTable:
+      # This resource is going to be defined as a DynamoDB table
+      Type: AWS::DynamoDB::Table
+      # Define the properties of the DynamoDB table
+      Properties:
+        # The name of the table
+        TableName: TodoTable
+        # Specify the billing mode
+        BillingMode: PAY_PER_REQUEST
+        # Define a property with its name and its type (of the table)
+        AttributeDefinitions:
+          # Property name
+          - AttributeName: id
+          # Property type
+            AttributeType: S
+        # Specify the specified property (attribute) as a primary key (id)
+        KeySchema:
+          # Primary key
+          - AttributeName: id
+            # To specify that this is an ID
+            KeyType: HASH
