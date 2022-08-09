@@ -9,7 +9,7 @@ const addTodo = async (event) => {
    * serverless should get access to be able to
    * use the dynamoDb resource.
    */
-  const dynamo = new AWS.DynamoDB.DocumentClient()
+  const dynamo = new AWS.DynamoDB.DocumentClient() // We need to create an instance of the dynamoDB
 
   /**
    * The event.body (where the body params
@@ -33,7 +33,7 @@ const addTodo = async (event) => {
   await dynamo.put({
     TableName: "TodoTable",
     Item: newTodo
-  }).promise();
+  }).promise(); // Promise is required to be returned
 
   return {
     statusCode: 200,

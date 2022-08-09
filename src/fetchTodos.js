@@ -13,7 +13,7 @@ const fetchTodos = async (event) => {
   let todos;
 
   try {
-    const results = await dynamo.scan({ TableName: "TodoTable" }).promise();
+    const results = await dynamo.scan({ TableName: "TodoTable" }).promise(); // promise is required to be returned
     todos = results.Items;
   } catch (error) {
     console.log(error); 

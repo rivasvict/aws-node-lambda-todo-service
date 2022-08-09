@@ -49,6 +49,12 @@ functions:
       - httpApi:
           path: /
           method: get
+  fetchTodo:
+    handler: src/fetchTodo.handler
+    events:
+      - httpApi:
+          path: /{id}
+          method: get
 
 # Cloudformation configuration (ourside aws resources we would want to provision)
 resources:
