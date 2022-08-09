@@ -5,6 +5,22 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-1
+  # To allow permission access on other resources (dynamodb)
+  # From our functions (so they are allowed to access these
+  # resources)
+  iamRoleStatements:
+    # What we want to to with this iam role statement (in this case allow)
+    - Effect: Allow
+      Action:
+        # * is not recommended as it has too open permissions
+        # Just for the sake of demonstration
+        - dynamodb:*
+      # Specify the resource (in this case, the tables on
+      # dynamoDB we want to affect) to appply this permission on
+      Resource:
+        # Find the resource number in the AWS console (look for the dynamo db table id)
+        # This unique identifier is the arn string on the dynamo's table
+        -  arn:aws:dynamodb:us-east-1:619961278067:table/TodoTable
 
 # Define your functions
 functions:
@@ -16,8 +32,17 @@ functions:
     events:
       # Run this function on httpApi on the path / on the method get
       - httpApi:
-          path: /
+          path: /hello
           method: get
+  addTodo:
+    # The actual function handler reference
+    handler: src/addTodo.handler
+    # Events list that trigger this handler
+    events:
+      # Run this function on httpApi on the path / on the method get
+      - httpApi:
+          path: /
+          method: post
 
 # Cloudformation configuration (ourside aws resources we would want to provision)
 resources:
