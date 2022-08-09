@@ -3,45 +3,29 @@
 const { v4 } = require("uuid");
 const AWS = require("aws-sdk");
 
-const fetchTodo = async (event) => {
+const fetchTodos = async (event) => {
   /**
    * REMINDER, for this to work your AWS user for
    * serverless should get access to be able to
    * use the dynamoDb resource.
    */
   const dynamo = new AWS.DynamoDB.DocumentClient()
+  let todos;
 
-  /**
-   * The event.body (where the body params
-   * of the request live) is a string
-   * instead of an object so we need to JSON
-   * parse it.
-   */
-  const { todo } = JSON.parse(event.body);
-  const createdAt = new Date();
-  // Generate a unique id
-  const id = v4();
-  console.log('This is an id', id);
-
-  const newTodo = {
-    id,
-    todo,
-    createdAt,
-    completed: false
+  try {
+    const results = await dynamo.scan({ TableName: "TodoTable" }).promise();
+    todos = results.Items;
+  } catch (error) {
+    console.log(error); 
   }
-
-  await dynamo.put({
-    TableName: "TodoTable",
-    Item: newTodo
-  }).promise();
 
   return {
     statusCode: 200,
-    body: JSON.stringify(newTodo),
+    body: JSON.stringify(todos),
   };
 };
 
 module.exports = {
-  handler: fetchTodo,
+  handler: fetchTodos,
 };
 
