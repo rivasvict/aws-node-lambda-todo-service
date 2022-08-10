@@ -39,7 +39,11 @@ const addTodo = ({ _AWS, _v4 }) => async (event) => {
   }
 
   await dynamo.put({
-    TableName: "TodoTable",
+    /**
+     * Added on the serverless.ymkl file within
+     * the providers -> environment section
+     */
+    TableName: process.env.DYNAMODB_TODO_TABLE,
     Item: newTodo
   }).promise(); // Promise is required to be returned
 

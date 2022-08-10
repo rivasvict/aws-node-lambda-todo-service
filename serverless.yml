@@ -5,6 +5,9 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: us-east-1
+  environment:
+    # References to environment variables can be accessed in the function
+    DYNAMODB_TODO_TABLE: TodoTable
   # To allow permission access on other resources (dynamodb)
   # From our functions (so they are allowed to access these
   # resources)
@@ -40,9 +43,10 @@ functions:
     # Events list that trigger this handler
     events:
       # Run this function on httpApi on the path / on the method get
-      - httpApi:
-          path: /
-          method: post
+      - httpApi: 'POST /'
+          # The below comments do the same as the above line
+          # path: /
+          # method: post
   updateTodo:
     handler: src/updateTodo.handler
     events:
